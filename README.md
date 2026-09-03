@@ -18,3 +18,7 @@ Ví dụ: 10000002 có LSB = 2 và MSB = 1.
 ví dụ: 012345678 có MSB = 12 và LSB = 78.  
 Big endianess: '12 34 56 78'
 Little endianess: '78 56 34 12'
+## Các thanh ghi x86-64 phổ biến:  
+- Thanh ghi là các ổ nhớ siêu nhỏ nhưng có tốc độ truy xuất nhanh nhất ( nằm trong cpu ).
+- Có kích thước 64 bits ( 8 bytes )
+  ###a. Thanh ghi mục đích chung:
