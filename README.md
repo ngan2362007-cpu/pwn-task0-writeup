@@ -43,3 +43,23 @@ Little endianess: '78 56 34 12'
 | .data | -> chứa các biến toàn cục ( global ) hoặc biến tĩnh được gán giá trị |
 | .text | -> chứa code. Vùng này có quyền đọc và thực thi |  
 
+## Calling convention:
+- Quy luật cách các hàm truyền dữ liệu cho nhau và cách CPU dọn dẹp khi gọi hàm trên Linux x86-64.
+  ### a. Truyền tham số:
+- 6 tham số đầu tiên đưa trực tiếp vào thanh ghi theo thứ tự cố định:
+    + Tham số 1: RDI
+    + Tham số 2: RSI
+    + Tham số 3: RDX
+    + Tham số 4: RCX
+    + Tham số 5: R8
+    + Tham số 6: R9
+* từ số 7 trở đi: do hết thanh ghi nên CPU đẩy vào bộ nhớ stack.
+  ### b. Trả về giá trị:
+- Sau Khi tính toán xong, kết quả trả về hàm luôn được cất vào thanh ghi RAX
+- Hàm gọi phía sau chỉ cần đọc thanh ghi RAX là lấy được kết quả.
+  ### c. Luồng chương trình chuyển dich ( call và ret )
+- Lệnh call ( gọi hàm ):
+  + đẩy địa chỉ của câu lệnh nằm ngay dưới lệnh call vào stack -> tên là saved rip / return address ( địa chỉ quay về ).
+- Lệnh ret ( thoát hàm quay về )
+  + sau khi chạy xong thì lệnh ret rút giá trị về saved rip trên đỉnh stack nạp ngược vào thanh ghi rip.
+  + CPU lập tức quay trở lại chạy tiếp câu lệnh call ban đầu.
