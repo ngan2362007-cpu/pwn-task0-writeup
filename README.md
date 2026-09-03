@@ -21,4 +21,25 @@ Little endianess: '78 56 34 12'
 ## Các thanh ghi x86-64 phổ biến:  
 - Thanh ghi là các ổ nhớ siêu nhỏ nhưng có tốc độ truy xuất nhanh nhất ( nằm trong cpu ).
 - Có kích thước 64 bits ( 8 bytes )
-  ###a. Thanh ghi mục đích chung:
+  ### a. Thanh ghi mục đích chung:
+- Lưu dữ liệu tạm thời, thực hiện tính toán hoặc truyền tham số khi gọi hàm.
+- RAX:
+  + Lưu giá trị trả về của hàm khi thực thi xong.
+  + Lưu mã ID của syscall khi thực hiện systemcall ( '0' là read, '1' là write, '60' là exit )
+- RDI, RSI, RDX, RCX, R8, R9: bộ 6 thanh ghi dùng để truyền 6 tham số đầu tiên vào 1 hàm.
+- RBX: lưu trữ dữ liệu chung.
+  ### b. Thanh ghi quản lý bộ nhớ và nguồn thực thi.
+- RSP: luôn trỏ vào đỉnh hiện tại của stack ( nơi có địa chỉ bộ nhớ nhỏ nhất trong stack frame ).
+- RBP: trỏ vào đý của stack frame. Dùng làm mốc để CPU tìm vị trí các biến cục bộ.
+- RIP: lưu địa chỉ bộ nhớ của câu lệnh assembly tiếp theo mà CPU thực hiện.
+## Memory space:  
+| KERMEL SPACE |   |  
+| :--- | :--- | 
+| stack | -> Phình từ cao xuống thấp   
+|        |  -> Chứa các biến cục bộ bên trong hàm,, các tham số dư và địa chỉ trả về |
+| heap | -> phình từ thấp lên cao 
+|      | -> vùng cấp phát bộ nhớ động chạy bằng các hàm như malloc(), free () |  
+| .bss | -> chứa các biến toàn cục/static chưa được gán giá trị ( nghĩa là nó luôn luôn = 0 ) |  
+| .data | -> chứa các biến toàn cục ( global ) hoặc biến tĩnh được gán giá trị |
+| .text | -> chứa code. Vùng này có quyền đọc và thực thi |  
+
