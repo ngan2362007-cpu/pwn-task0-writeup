@@ -69,15 +69,18 @@ Little endianess: '78 56 34 12'
 - RSP: trỏ trực tiếp vào đỉnh cả stack ( nơi có địa chỉ bộ nhớ thấp nhất ).
 - RBP: trỏ trực tiếp vào đáy của stack ( mốc cố định để truy cập biến cục bộ và tham số ).
 
-[ ĐỊA CHỈ CAO ]
+```text
+               [ ĐỊA CHỈ CAO ]
         +----------------------------+
-        |  Saved RIP (Return Addr)   |  <- [3] Mục tiêu ghi đè của Hacker!
+        |  Saved RIP (Return Addr)   |  <- [3] Ghi đè địa chỉ quay về (Mục tiêu chiếm RIP)
         +----------------------------+
-        |         Saved RBP          |  <- [2] Bị ghi đè tiếp theo
+        |         Saved RBP          |  <- [2] Ghi đè con trỏ đáy Stack cũ
 RBP --->+----------------------------+
-        |   buffer[16] (16 bytes)    |  <- [1] Nhập quá 16 bytes, dữ liệu tràn LÊN TRÊN
+        |   buffer[16] (16 bytes)    |  <- [1] Nhập quá 16 bytes -> Dữ liệu tràn LÊN TRÊN
 RSP --->+----------------------------+
                [ ĐỊA CHỈ THẤP ]
+```
+
   ### b. Liên hệ của stack với memory layout.
 - Vị trí: stack ở vùng có địa chỉ cao trong bộ nhớ
 - Hhướng phình: phình từ vùng có địa chỉ cao xuống vùng có địa chỉ thấp.
