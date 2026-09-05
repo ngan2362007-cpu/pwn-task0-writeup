@@ -6,7 +6,7 @@
 -Byte: 1 nhóm gồm 8 bit.  
   1 byte = 8 bit  
 ví dụ: 10101010 = 1 byte  
--Nubble: 1 nhóm gồm 4 bit ( nửa byte ).  
+-Nibble: 1 nhóm gồm 4 bit ( nửa byte ).  
 **LSB/MSB**
 -LSB: bit/byte có GTNN (nằm ngoài cùng phía bên phải )  
 -MSB: bit/byte có GTLN (nằm ngoài cùng phía bên trái )  
@@ -63,3 +63,37 @@ Little endianess: '78 56 34 12'
 - Lệnh ret ( thoát hàm quay về )
   + sau khi chạy xong thì lệnh ret rút giá trị về saved rip trên đỉnh stack nạp ngược vào thanh ghi rip.
   + CPU lập tức quay trở lại chạy tiếp câu lệnh call ban đầu.
+## stack: 
+- Vùng nhớ tạm thời hoạt động theo cơ chế LIFO ( vào sau, ra trước ), phát triển từ địa chỉ cao đến địa chỉ thấp trong không gian bộ nhớ ảo.  
+  ### a. Liên hệ của stack với thanh ghi:
+- RSP: trỏ trực tiếp vào đỉnh cả stack ( nơi có địa chỉ bộ nhớ thấp nhất ).
+- RBP: trỏ trực tiếp vào đáy của stack ( mốc cố định để truy cập biến cục bộ và tham số ).
+[ ĐỊA CHỈ CAO ]
+        +----------------------------+
+        |  Saved RIP (Return Addr)   |  <- [3] Mục tiêu ghi đè của Hacker!
+        +----------------------------+
+        |         Saved RBP          |  <- [2] Bị ghi đè tiếp theo
+RBP --->+----------------------------+
+        |   buffer[16] (16 bytes)    |  <- [1] Nhập quá 16 bytes, dữ liệu tràn LÊN TRÊN
+RSP --->+----------------------------+
+               [ ĐỊA CHỈ THẤP ]
+  ### b. Liên hệ của stack với memory layout.
+- Vị trí: stack ở vùng có địa chỉ cao trong bộ nhớ
+- Hhướng phình: phình từ vùng có địa chỉ cao xuống vùng có địa chỉ thấp.
+- xung đột: Nếu stack phình xuống rộng chạm vào heap =>> stack overflow sẽ xảy ra ( stack overflow là khi dữ liệu ghi vào 1 mảng bị vượt quá kích thước cấp phát trên stack khiến dữ liệu tràn ra ngoài và ghi đè lên ô nhớ khác )
+  ### c. Cơ chế của push và pop
+- Lệnh push ( đẩy dữ liệu vào stack )
+  + Push làm phình stack xuống dưới bằng 2 cách:
+      1. Trừ con trỏ đỉnh stack: RSP = RSP - 8
+      2. Ghi dữ liệu: chép giá trị src vào địa chỉ [ RSP ]
+- Lệnh pop: dst ( rút dữ liệu ra khỏi stack )
+  + pop làm thu hẹp stack lên phía trên bằng 2 cách:
+      1. Đọc dữ liệu: trích xuất giá trị 8 bytes tại ô nhớ [ RSP ] gán vào thanh ghi/ ô nhớ dst.
+      2. tăng con trỏ vào đỉnh stack: RSP = RSP + 8.
+### Hex / binary:  
+- Binary ( nhị phân ): chỉ có số 0 và 1 ( '0' là bật và '1' là tắt công tắc )
+- Hex ( lục phân / cơ số 16 ): vì chuỗi 0 và 1 quá dài nên ng ta gộp 4 số nhị phân thành 1 ký tự Hex.
+- Hex gồm các số từ 0 đến 9 và các chữ từ A - F. Trong code, Hex luôn có 0x ở đầu.
+- 
+- 
+  
