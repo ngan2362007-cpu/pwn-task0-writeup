@@ -30,7 +30,7 @@ Little endianess: '78 56 34 12'
 - RBX: lưu trữ dữ liệu chung.
   ### b. Thanh ghi quản lý bộ nhớ và nguồn thực thi.
 - RSP: luôn trỏ vào đỉnh hiện tại của stack ( nơi có địa chỉ bộ nhớ nhỏ nhất trong stack frame ).
-- RBP: trỏ vào đý của stack frame. Dùng làm mốc để CPU tìm vị trí các biến cục bộ.
+- RBP: trỏ vào đáy của stack frame. Dùng làm mốc để CPU tìm vị trí các biến cục bộ.
 - RIP: lưu địa chỉ bộ nhớ của câu lệnh assembly tiếp theo mà CPU thực hiện.
 ## Memory space:  
 | KERMEL SPACE |   |  
@@ -68,6 +68,7 @@ Little endianess: '78 56 34 12'
   ### a. Liên hệ của stack với thanh ghi:
 - RSP: trỏ trực tiếp vào đỉnh cả stack ( nơi có địa chỉ bộ nhớ thấp nhất ).
 - RBP: trỏ trực tiếp vào đáy của stack ( mốc cố định để truy cập biến cục bộ và tham số ).
+
 [ ĐỊA CHỈ CAO ]
         +----------------------------+
         |  Saved RIP (Return Addr)   |  <- [3] Mục tiêu ghi đè của Hacker!
