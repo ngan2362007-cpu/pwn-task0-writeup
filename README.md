@@ -125,58 +125,81 @@ RSP --->+----------------------------+
     vd: JE is_equal là Nhảy đến is_equal nếu kết quả CMP bằng nhau  
   + LOOP =>> Lặp theo thanh ghi CX  
     vd: LOOP my_loop là CX = CX - 1, nếu CX khác 0 thì nhảy về my_loop
-**VÍ DỤ VỀ CODE ASSEMBLY**
-**Bài 1** In chuỗi ký tự bất kỳ  
-.model small  
-.stack 100h  
-.data  
-msg db 'Ket qua: $'  
-.code     
-main proc   
-    mov ax, @data   
-    mov ds, ax  
     
-    mov ah, 09h  
-    Lea dx, msg  
-    Int 21h   
-    
-    Mov ah, 4ch  
-    Int 21h   
-    
-main endp  
-end main   
+## VÍ DỤ VỀ CODE ASSEMBLY 
+**Bài 1** In chuỗi ký tự bất kỳ    
+    .model small  
+    .stack 100h  
+    .data  
+    msg db 'Ket qua: $'  
+    .code     
+    main proc   
+        mov ax, @data   
+        mov ds, ax  
+        
+        mov ah, 09h  
+        Lea dx, msg  
+        Int 21h   
+        
+        Mov ah, 4ch  
+        Int 21h   
+        
+    main endp  
+    end main   
 
 **Bài 2** Tính tổng 2 số 
-.model small  
-.stack 100h  
-.data          
-    num1 db 2  
-    num2 db 3  
-    msg db 'Ket qua: $'  
-.code     
-main proc   
-    mov ax, @data   
-    mov ds, ax    
+    .model small  
+    .stack 100h  
+    .data          
+        num1 db 2  
+        num2 db 3  
+        msg db 'Ket qua: $'  
+    .code     
+    main proc   
+        mov ax, @data   
+        mov ds, ax    
+        
+        mov al, num1  
+        add al, num2   
+        
+        add al, '0'   
+        mov bl, al    
+        
+        mov ah, 09h  
+        lea dx, msg   
+        int 21h  
+        
+        mov ah, 02h  
+        mov dl, bl  
+        int 21h  
+        
+        mov ah, 4ch  
+        int 21h    
+        
+    main endp  
+    end main     
+## Linux:  
+### Quản lý tệp và thư mục    
+- ls: Liệt kê các tệp và thư mục.
+- cd <path>: Di chuyển đến thư mục chỉ định.
+- pwd: In đường dẫn thư mục hiện tại.
+- mkdir <folder>: Tạo thư mục mới.
+- rm <file>: Xóa tệp.
+- p <source> <destination>: Sao chép tệp hoặc thư mục (dùng cp -r cho thư mục)
+- mv <source> <destination>: Di chuyển hoặc đổi tên tệp/thư mục.
+### Xem và sửa nội dung tệp:    
+- cat <file>: In toàn bộ nội dung tệp ra màn hình.
+- less <file>: Xem nội dung tệp lớn theo từng trang (bấm q để thoát).
+- head -n 10 <file> / tail -n 10 <file>: Xem 10 dòng đầu hoặc 10 dòng cuối của tệp.
+- nano <file> / vim <file>: Trình chỉnh sửa văn bản trực tiếp trên Terminal.
+- grep "<pattern>" <file>: Tìm kiếm chuỗi văn bản trong tệp.
+### Phân Quyền & Hệ thống  
+- chmod <permission> <file>: Thay đổi quyền truy cập tệp (Ví dụ: chmod +x script.sh để cấp quyền thực thi).
+- chown <user>:<group> <file>: Thay đổi chủ sở hữu của tệp.
+- sudo <command>: Chạy lệnh với quyền quản trị cao nhất (root).
+- ps aux: Liệt kê tất cả các tiến trình (process) đang chạy.
+- kill -9 <PID>: Tắt bắt buộc một tiến trình theo mã PID.
+- df -h: Kiểm tra dung lượng đĩa cứng còn trống.
+- free -h: Kiểm tra dung lượng RAM đang sử dụng.
     
-    mov al, num1  
-    add al, num2   
-    
-    add al, '0'   
-    mov bl, al    
-    
-    mov ah, 09h  
-    lea dx, msg   
-    int 21h  
-    
-    mov ah, 02h  
-    mov dl, bl  
-    int 21h  
-    
-    mov ah, 4ch  
-    int 21h    
-    
-main endp  
-end main   
-
-
-  
+      
