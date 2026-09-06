@@ -144,8 +144,9 @@ main proc
     Int 21h   
     
 main endp  
-end main     
-**Bài 2**   
+end main   
+
+**Bài 2** Tính tổng 2 số 
 .model small  
 .stack 100h  
 .data          
@@ -166,7 +167,6 @@ main proc
     mov ah, 09h  
     lea dx, msg   
     int 21h  
-    
     
     mov ah, 02h  
     mov dl, bl  
