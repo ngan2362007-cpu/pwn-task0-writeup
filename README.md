@@ -109,20 +109,74 @@ RSP --->+----------------------------+
 - Cú pháp phổ biến (Intel Syntax):
   + Lệnh  Đích, Nguồn (ví dụ: MOV AX, 5 nghĩa là gán AX = 5).
 * Các lệnh assembly cơ bản:
-  + MOV => Gán dữ liệu:
-    vd: MOV AX, 10 là AX = 10
-  + ADD =>> Phép cộng:
-    vd: ADD AX, 5 là AX = AX + 5
-  + SUB =>> Phép trừ
-    vd: SUB AX, 2 là AX = AX - 2
-  + INC / DEC =>> Tăng / Giảm 1
-    vd: INC AX là AX = AX + 1
-  + CMP =>> So sánh 2 giá trị
-    vd: CMP AX, BX là So sánh AX và BX (đặt cờ CPU)
-  + JMP =>> Nhảy không điều kiện
-    vd: JMP target là Chạy tiếp tại nhãn target
-  + JE / JNE =>> Nhảy nếu Bằng / Không bằng
-    vd: JE is_equal là Nhảy đến is_equal nếu kết quả CMP bằng nhau
-  + LOOP =>> Lặp theo thanh ghi CX
+  + MOV => Gán dữ liệu:  
+    vd: MOV AX, 10 là AX = 10  
+  + ADD =>> Phép cộng:  
+    vd: ADD AX, 5 là AX = AX + 5  
+  + SUB =>> Phép trừ  
+    vd: SUB AX, 2 là AX = AX - 2  
+  + INC / DEC =>> Tăng / Giảm 1  
+    vd: INC AX là AX = AX + 1  
+  + CMP =>> So sánh 2 giá trị  
+    vd: CMP AX, BX là So sánh AX và BX (đặt cờ CPU)  
+  + JMP =>> Nhảy không điều kiện  
+    vd: JMP target là Chạy tiếp tại nhãn target  
+  + JE / JNE =>> Nhảy nếu Bằng / Không bằng  
+    vd: JE is_equal là Nhảy đến is_equal nếu kết quả CMP bằng nhau  
+  + LOOP =>> Lặp theo thanh ghi CX  
     vd: LOOP my_loop là CX = CX - 1, nếu CX khác 0 thì nhảy về my_loop
+**VÍ DỤ VỀ CODE ASSEMBLY**
+**Bài 1** In chuỗi ký tự bất kỳ  
+.model small  
+.stack 100h  
+.data  
+msg db 'Ket qua: $'  
+.code     
+main proc   
+    mov ax, @data   
+    mov ds, ax  
+    
+    mov ah, 09h  
+    Lea dx, msg  
+    Int 21h   
+    
+    Mov ah, 4ch  
+    Int 21h   
+    
+main endp  
+end main     
+**Bài 2**   
+.model small  
+.stack 100h  
+.data          
+    num1 db 2  
+    num2 db 3  
+    msg db 'Ket qua: $'  
+.code     
+main proc   
+    mov ax, @data   
+    mov ds, ax    
+    
+    mov al, num1  
+    add al, num2   
+    
+    add al, '0'   
+    mov bl, al    
+    
+    mov ah, 09h  
+    lea dx, msg   
+    int 21h  
+    
+    
+    mov ah, 02h  
+    mov dl, bl  
+    int 21h  
+    
+    mov ah, 4ch  
+    int 21h    
+    
+main endp  
+end main   
+
+
   
