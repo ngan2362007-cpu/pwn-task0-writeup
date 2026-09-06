@@ -41,7 +41,7 @@ Little endianess: '78 56 34 12'
 |      | -> vùng cấp phát bộ nhớ động chạy bằng các hàm như malloc(), free () |  
 | .bss | -> chứa các biến toàn cục/static chưa được gán giá trị ( nghĩa là nó luôn luôn = 0 ) |  
 | .data | -> chứa các biến toàn cục ( global ) hoặc biến tĩnh được gán giá trị |
-| .text | -> chứa code. Vùng này có quyền đọc và thực thi |  
+| .text | -> chứa code. Vùng này có quyền đọc và thực thi |    
 
 ## Calling convention:
 - Quy luật cách các hàm truyền dữ liệu cho nhau và cách CPU dọn dẹp khi gọi hàm trên Linux x86-64.
@@ -94,10 +94,35 @@ RSP --->+----------------------------+
   + pop làm thu hẹp stack lên phía trên bằng 2 cách:
       1. Đọc dữ liệu: trích xuất giá trị 8 bytes tại ô nhớ [ RSP ] gán vào thanh ghi/ ô nhớ dst.
       2. tăng con trỏ vào đỉnh stack: RSP = RSP + 8.
-### Hex / binary:  
+## Hex / binary:  
 - Binary ( nhị phân ): chỉ có số 0 và 1 ( '0' là bật và '1' là tắt công tắc )
 - Hex ( lục phân / cơ số 16 ): vì chuỗi 0 và 1 quá dài nên ng ta gộp 4 số nhị phân thành 1 ký tự Hex.
 - Hex gồm các số từ 0 đến 9 và các chữ từ A - F. Trong code, Hex luôn có 0x ở đầu.
-- 
-- 
+## ASSEMBLY:  
+- Thanh ghi:
+  + AX/RAX: thanh ghi tích luỹ ( dùng tính toán, nhập/ xuất, lưu giá trị trả về )
+  + BX / RBX: Thanh ghi cơ sở (lưu địa chỉ bộ nhớ).
+  + CX / RCX: Thanh ghi đếm (dùng cho vòng lặp LOOP).
+  + DX / RDX: Thanh ghi dữ liệu (dùng kết hợp chia/nhân lớn, nhập xuất).
+- Kiến trúc & Cú pháp:
+  + 16-bit (emu8086): Dùng thanh ghi AX, BX, ngắt INT 21h.
+- Cú pháp phổ biến (Intel Syntax):
+  + Lệnh  Đích, Nguồn (ví dụ: MOV AX, 5 nghĩa là gán AX = 5).
+* Các lệnh assembly cơ bản:
+  + MOV => Gán dữ liệu:
+    vd: MOV AX, 10 là AX = 10
+  + ADD =>> Phép cộng:
+    vd: ADD AX, 5 là AX = AX + 5
+  + SUB =>> Phép trừ
+    vd: SUB AX, 2 là AX = AX - 2
+  + INC / DEC =>> Tăng / Giảm 1
+    vd: INC AX là AX = AX + 1
+  + CMP =>> So sánh 2 giá trị
+    vd: CMP AX, BX là So sánh AX và BX (đặt cờ CPU)
+  + JMP =>> Nhảy không điều kiện
+    vd: JMP target là Chạy tiếp tại nhãn target
+  + JE / JNE =>> Nhảy nếu Bằng / Không bằng
+    vd: JE is_equal là Nhảy đến is_equal nếu kết quả CMP bằng nhau
+  + LOOP =>> Lặp theo thanh ghi CX
+    vd: LOOP my_loop là CX = CX - 1, nếu CX khác 0 thì nhảy về my_loop
   
